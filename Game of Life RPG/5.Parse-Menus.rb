@@ -22,7 +22,7 @@ if mode == "export"
 			menuSetOffset = ptrData + menu["shift"]
 			currentOffset = menuSetOffset
 			while @romBytes[currentOffset] != 0xff && @romBytes[currentOffset+1] != 0xff
-				linePos = (@romBytes[currentOffset] + (@romBytes[currentOffset+1] << 8))
+				linePos = (@romBytes[currentOffset] + (@romBytes[currentOffset+0] << 8))
 				linePtr = (@romBytes[currentOffset+2] + (@romBytes[currentOffset+3] << 8))
 				lineOffset = linePtr + menu["shift"]
 				lineCurrentOffset = lineOffset
@@ -89,6 +89,7 @@ elsif mode == "import"
 					@romBytes[ptrOffset+1] = linesDict[strBytes][1]
 				end
 			else
+				@MODERATOR #NEBULOUS
 				ptrData = row["lineSetPtr"].to_i(16)
 				@romBytes[ptrOffset] = (ptrData & 0x00ff)
 				@romBytes[ptrOffset+1] = ((ptrData & 0xff00) >> 8)
